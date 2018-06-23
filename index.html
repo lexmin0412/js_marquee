@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>无缝滚动测试</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .outer-box {
+      width: 100%;
+      height: 100px;
+      background-color: #ffe400;
+      overflow: hidden;
+    }
+
+    #box {
+      width: 200px;
+      /* height: 400px; */
+      overflow: hidden;
+      /* height: 200px; */
+      background-color: #00c1de;
+    }
+
+    img {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="outer-box">
+    <div id="box">
+      <ul>
+        <li>
+          <img src="./resource/images/1.jpg" alt="">
+          <div>图片描述</div>
+        </li>
+        <li>
+          <img src="./resource/images/2.jpg" alt="">
+          <div>图片描述</div>
+        </li>
+        <li>
+          <img src="./resource/images/3.jpg" alt="">
+          <div>图片描述</div>
+        </li>
+        <li>
+          <img src="./resource/images/4.jpg" alt="">
+          <div>图片描述</div>
+        </li>
+        <li>
+          <img src="./resource/images/5.jpg" alt="">
+          <div>图片描述</div>
+        </li>
+        <li>
+          <img src="./resource/images/6.jpg" alt="">
+          <div>图片描述</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="./lib/jquery-1.8.3.min.js"></script>
+  <script>
+    window.onload = function () {
+
+      // problems
+      // 不加ul会抖一下
+
+      /* params
+       * 
+       */
+
+      jqueyRoll('#box', 20000, 'linear')
+
+      function jqueyRoll(ele, time, easingFunc) {
+
+        // 获取盒子总高度(也是需要偏移的高度)
+        var itemLength = $(ele).children('ul').children('li').length
+        var itemHeight = $(ele).children('ul').children('li:first-child').height()
+
+        var moveHeight = itemHeight * itemLength
+
+        // 克隆第一个item，加到最后
+        var firstItemClone = $(ele).children('ul').children('li:first-child').html()
+        $(ele).children('ul').append(firstItemClone)
+
+        // 给元素设置定位
+        $(ele).parent().css({
+          position: 'relative'
+        })
+        $(ele).css({
+          position: 'absolute',
+        })
+
+        // 进入页面开始动画
+        startAnimate()
+
+        // 设置定时器 循环滚动
+        setInterval(function () {
+          $('#box').css({
+            top: 0
+          }).stop(true)
+          startAnimate()
+        }, time)
+
+        function startAnimate() {
+          $('#box').animate({
+            top: '-' + moveHeight + 'px'
+          }, time, easingFunc, function () {
+            $('#box').css({
+              top: 0
+            })
+          })
+        }
+      }
+
+
+    }
+  </script>
+</body>
+
+</html>
