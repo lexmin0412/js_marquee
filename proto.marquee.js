@@ -16,6 +16,7 @@ function marquee ( ele, time, easingFunc ) {
 
   // 克隆第一个item,加到最后
   var firstItemClone = itemList[0].cloneNode(true)
+  listBox.parentNode.style.position = 'absolute'
   listBox.appendChild(firstItemClone)
   console.log(document.querySelectorAll(''+ ele +' ul li'))
 
@@ -28,10 +29,11 @@ function marquee ( ele, time, easingFunc ) {
 
   // 设置定时器 循环滚动
   setInterval(function(){
-    console.log(222222)
+    console.log(222222, $('#box').css('top'), top)
 
+    top -= 2
     $('#box').css({
-      top: 
+      top: parseInt(top) - 2 + 'px'
     })
   },time)
 
