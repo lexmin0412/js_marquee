@@ -29,7 +29,7 @@ function marquee ( ele, time, easingFunc ) {
 
   // 设置定时器 循环滚动
   setInterval(function(){
-    console.log(222222, $('#box').css('top'), top)
+    // console.log(222222, $('#box').css('top'), top)
 
     top -= 2
     $('#box').css({
